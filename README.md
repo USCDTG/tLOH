@@ -58,6 +58,8 @@ Each input .csv should contain the following columns:
 "REF" - reference counts           
 "ALT" - alternative counts         
 
+Example .csv's are available in the /inst/extdata directory.               
+
 ```
 myDF <- tLOHCalc('inputDirectory','sampleName')
 listOfPlots <- plotSpatialLOH(myDF,'sampleName')
