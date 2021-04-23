@@ -54,21 +54,22 @@ output .csv{s} and plot the results. Examples of how to run this tool are below:
 1. tLOHCalc() is the main calculation function. It requires a full path to
 an input directory and sample name.
 ```{r marginalCalculations, eval=FALSE, message='hide'}
- df <- tLOHCalc('../inst/extdata/',"Example")
- 
- head(df)
+## A tar.gz file of example files is in the inst/exdata directory
+
+df <- tLOHCalc('/path/to/sampleDirectory',"sampleName")
 ```
 
-2. plotLOH() is the plotting function. It requires an input dataframe -- 
-which will be the output of tLOHCalc and sample name. This tool returns a 
-list of three plots, which you can visualize individually:
+2. plotLOH() is the plotting function. It requires an input dataframe, 
+which will be the output of tLOHCalc, and sample name. This tool returns a 
+list of two plots, which you can visualize individually:
 
-```{r plotting1, eval=FALSE, message='hide'}
-savePlots <- plotLOH(df,"Example")
+```{r plotting, eval=TRUE, message='hide'}
 
-savePlots[[1]]
+load('../data/exampleDF.rda')
+listOfPlots <- plotLOH(df,'Example')
 
-savePlots[[2]]
+listOfPlots[[1]]
 
+listOfPlots[[2]]
 ```
 
