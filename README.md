@@ -43,8 +43,8 @@ Each input .csv should contain the following columns:
 "CHR" - chromosome number            
 "CHR\_withLabel" - chomosome containing the 'chr' prefix            
 "POS" - SNP position        
-"POS\_oneBefore" - one position before
-"rsID" - SNP rsID            
+"POS\_oneBefore" - one position before           
+"rsID" - SNP rsID                  
 "vcfQUAL" - QUAL field from VCF           
 "vcf_refNucleotide" - reference nucleotide from the VCF          
 "vcf\_altNucleotide" - alternative nucleotide from the VCF       
