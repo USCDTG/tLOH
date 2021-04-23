@@ -15,10 +15,8 @@ library('tLOH')
 library('purrr')
 library('dplyr')
 ```
-
-## tLOH Vignette
-### v0.99.0    
 ______________
+### v0.99.0
 
 tLOH: Assessment of evidence for loss of heterozygosity in spatial 
 transcriptomics pre-processed data using Bayes factor calculations.

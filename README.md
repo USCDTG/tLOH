@@ -74,6 +74,8 @@ listOfPlots[[3]]
 ```
 ![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_columnPlot.png)
 
+Dotted line represents stringent threshold for substantial evidence toward Model 2.
+
 ## Notes
 This version is optimized for human data aligned to GRCh38. The HLA region on chromosome 6 is omitted from this analysis (chr6:28510120-33500500), but will be analyzed in further versions. SNP positions with total allele counts above 2000 were not included, but will be considered in future release.
 
