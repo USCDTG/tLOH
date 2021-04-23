@@ -53,9 +53,8 @@ output .csv{s} and plot the results. Examples of how to run this tool are below:
 
 1. tLOHCalc() is the main calculation function. It requires a full path to
 an input directory and sample name.
-```{r marginalCalculations, eval=TRUE, message='hide'}
-setwd('../inst/extdata/')
- df <- tLOHCalc('.',"Example")
+```{r marginalCalculations, eval=FALSE, message='hide'}
+ df <- tLOHCalc('../inst/extdata/',"Example")
  
  head(df)
 ```
@@ -64,7 +63,7 @@ setwd('../inst/extdata/')
 which will be the output of tLOHCalc and sample name. This tool returns a 
 list of three plots, which you can visualize individually:
 
-```{r plotting1, eval=TRUE, message='hide'}
+```{r plotting1, eval=FALSE, message='hide'}
 savePlots <- plotLOH(df,"Example")
 
 savePlots[[1]]

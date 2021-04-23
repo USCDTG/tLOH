@@ -3,7 +3,9 @@
 Assessment of evidence for loss of heterozygosity in spatial transcriptomics pre-processed data using Bayes factor calculations.
 
 ## About
-The functions included in this package allow for calculation of a Bayes factor using allele fraction data at each single nucleotide polymorphic site that is provided. Visium spatial data must be pre-processed using the instructions at https://github.com/USCDTG/spatialAlleleCountPipeline to obtain an individual sample directory of per-cluster .csv's that will be the input for tLOH. The output of this R package is a sample .csv with Bayes factor calculations for all clusters at all sites. The naming convention is 'sample\_tLOH_output.csv'.There is a separate plotting function, plotSpatialLOH(), in the package to visualize allele fraction and Bayes factors per chromosome.
+Loss of heterozygosity (LOH) refers to a genomic event where a chromosomal region on one allele is lost. Evidence for this event can be calculated by examining allele frequency (AF), or the ratio of alleles, at known heterozygous positions. AF at a known heterozygous (single nucleotide polymorphism) SNP should be around 0.50, where half of the sequencing reads at that position align to the reference allele and half to the alternative. As AF approaches 0 or 1, this represents an uneven distribution of counts to either reference or alternative. Bayesian statistics can be used to assess the ratio of likelihood of a heterozygous or LOH event at each SNP.         
+
+The functions included in this package allow for calculation of a Bayes factor at each SNP provided. Visium spatial data must be pre-processed using the instructions at https://github.com/USCDTG/spatialAlleleCountPipeline to obtain an individual sample directory of per-cluster .csv's that will be the input for tLOH. Output from this R package includes a dataframe with Bayes factor calculations for all clusters at all sites. There is a separate plotting function in the package to visualize allele fraction and aggregated Bayes factors per chromosome.
 
 ![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/bayesFactor.png)
 
