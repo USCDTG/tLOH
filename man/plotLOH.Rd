@@ -4,7 +4,7 @@
 Plot the output from the tLOH function
 }
 \description{
-Creates a list of three plots for visualiation of allele
+Creates a list of two plots for visualiation of allele
 frequency and bayes factors
 }
 \arguments{
@@ -17,7 +17,7 @@ frequency and bayes factors
 }
 
 \value{
-Output is a list of three plots. Can be assigned to object and visualized
+Output is a list of two plots. Can be assigned to object and visualized
 individually
 }
 

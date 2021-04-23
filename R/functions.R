@@ -119,43 +119,7 @@ plotLOH <- function(df,sample){
     intermediate <- data.table::setDT(toPlot)
     toPlot2 <- intermediate[, sum(Log10InverseBayes),by=list(Cluster,CHR)]
     names(toPlot2) <- c("Cluster","CHR","SumLog10InverseBF")
-    p2 <- ggplot2::ggplot(toPlot2, aes(x = CHR, y = SumLog10InverseBF,
-                                       color = as.factor(Cluster))) +
-        annotate("rect", xmin = 1, xmax = 2, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 3, xmax = 4, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 5, xmax = 6, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 7, xmax = 8, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 9, xmax = 10, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 11, xmax = 12, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 13, xmax = 14, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 15, xmax = 16, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 17, xmax = 18, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 19, xmax = 20, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        annotate("rect", xmin = 21, xmax = 22, ymin = -Inf,
-                 ymax = Inf, fill = "darkgrey", alpha = 0.02) +
-        geom_line() +
-        geom_hline(yintercept=3, linetype="dashed", color = "black",
-                   size=0.50) +
-        ggtitle(sample) +
-        labs(color = 'Cluster') +
-        geom_point(size = 0.75) +
-        xlab("Chromosome") +
-        scale_x_continuous(n.breaks = 23, expand = c(0,0)) +
-        scale_y_continuous(n.breaks = 15) +
-        ylab("Log10(InverseBayes)") +
-        theme_classic()
-
-    p3 <- ggplot2::ggplot(toPlot2, aes(x = as.factor(Cluster),
+    p2 <- ggplot2::ggplot(toPlot2, aes(x = as.factor(Cluster),
                                        y = SumLog10InverseBF,
                                        fill = as.factor(Cluster),
                                        color = as.factor(Cluster))) +
@@ -178,7 +142,7 @@ plotLOH <- function(df,sample){
               axis.title.x = element_text(face = "bold"),
               axis.title.y = element_text(face = "bold"),
               axis.text.y = element_text(face = "bold", size = 10))
-    listOfPlots <- list(p1,p2,p3)
+    listOfPlots <- list(p1,p2)
     return(listOfPlots)
 }
 
