@@ -1,0 +1,78 @@
+---
+title: "tLOH"
+author: "Michelle Webb"
+date: "4/20/2021"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{tLOH}
+  %\usepackage[UTF-8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library('tLOH')
+library('purrr')
+library('dplyr')
+```
+
+## tLOH Vignette
+### v0.99.0    
+______________
+
+tLOH: Assessment of evidence for loss of heterozygosity in spatial 
+transcriptomics pre-processed data using Bayes factor calculations.
+
+This tool requires a directory of Visium spatial transcriptomics per-cluster 
+.csv(s) with the following columns:
+
+"CHR", ## chromosome            
+"CHR\_withLabel", ## chomosome containing the 'chr' prefix            
+"POS", ## SNP position        
+"POS\_oneBefore", ## one position before
+"rsID", ## SNP rsID            
+"vcfQUAL", ## QUAL field from VCF           
+"vcf_refNucleotide" ## reference nucleotide from the VCF          
+"vcf\_altNucleotide" ## alternative nucleotide from the VCF       
+"INFO" ## VCF Information field          
+"vcfAF", ## VCF allele fraction            
+"genotype" ## genotype from the VCF, such as '0/1'        
+"A", ## coverage of A           
+"C", ## coverage of C       
+"G", ## coverage of G         
+"T", ## coverage of T        
+"REF", ## reference counts           
+"ALT". ## alternative counts         
+
+The naming convention of these files in the input directory should be
+sample\_cluster[clusterNumber]\_alleleCounts.csv
+e.g. Slide1\_cluster1_alleleCounts.csv, Slide1\_cluster2\_alleleCounts.csv
+
+This data is obtained using the tLOH pre-processing python pipeline. The 
+purpose of this R package is to perform Bayes calculations on the data from the
+output .csv{s} and plot the results. Examples of how to run this tool are below:
+
+
+1. tLOHCalc() is the main calculation function. It requires a full path to
+an input directory and sample name.
+```{r marginalCalculations, eval=TRUE, message='hide'}
+setwd('../inst/extdata/')
+ df <- tLOHCalc('.',"Example")
+ 
+ head(df)
+```
+
+2. plotLOH() is the plotting function. It requires an input dataframe -- 
+which will be the output of tLOHCalc and sample name. This tool returns a 
+list of three plots, which you can visualize individually:
+
+```{r plotting1, eval=TRUE, message='hide'}
+savePlots <- plotLOH(df,"Example")
+
+savePlots[[1]] ## Allele Fraction Plot
+
+savePlots[[2]] ## Line plot of aggregated Log10(1/K)
+
+savePlots[[3]] ## Column plot of aggregated Log10(1/K)
+```
+

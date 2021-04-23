@@ -1,0 +1,4 @@
+citEntry(entry = "unpublished", header = "To cite tLOH in publications,
+please include a link to both the
+pre-processing pipeline at https://github.com/USCDTG/spatialAlleleCountPipeline
+and the tLOH R package at https://github.com/USCDTG/tLOH.")
