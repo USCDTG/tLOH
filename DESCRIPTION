@@ -32,5 +32,6 @@ Imports: scales,
     purrr,
     dplyr
 VignetteBuilder: knitr
+BugReports: https://github.com/USCDTG/tLOH/issues
 biocViews: CopyNumberVariation, Transcription, SNP, GeneExpression, 
     Transcriptomics

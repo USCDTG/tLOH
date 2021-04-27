@@ -12,7 +12,7 @@ Changes in version 0.99.1 (2021-04-27)
 + Updated vignette text to be more informative and contain link to 
     pre-processing steps
 + Added documentation on contents of inst.extdata/df.rda in the vignette
-+ Reduced size of sample images in inst/extdata
++ Reduced size of sample images and tar.gz in inst/extdata
 
 Changes in version 0.99.0 (2021-04-22)    
 + Initial Code Edits            
