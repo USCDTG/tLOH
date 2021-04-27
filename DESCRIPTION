@@ -13,7 +13,7 @@ Description: tLOH, or transcriptomicsLOH, assesses evidence for loss of
     data. This tool requires spatial transcriptomics cluster and allele count 
     information at likely heterozygous single-nucleotide polymorphism (SNP) 
     positions. Bayes factors are calculated at each SNP to determine likelihood 
-    of potential loss of heterozygosity event.A plotting function is included 
+    of potential loss of heterozygosity event. A plotting function is included 
     to visualize allele fraction and aggregated Bayes factor per chromosome. 
     Data generated with the 10X Genomics Visium Spatial Gene Expression platform 
     must be pre-processed using the instructions at 
