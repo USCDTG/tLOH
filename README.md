@@ -1,5 +1,5 @@
 # tLOH
-### v0.99.1
+### v0.99.2
 Assessment of evidence for loss of heterozygosity in spatial transcriptomics pre-processed data using Bayes factor calculations.
 
 ## About

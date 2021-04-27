@@ -4,7 +4,7 @@ author: "Michelle Webb"
 date: "4/27/2021"
 output: html_document
 vignette: >
-  %\VignetteEngine{knitr::knitr}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{tLOH}
   %\usepackage[UTF-8]{inputenc}
 ---
@@ -15,8 +15,7 @@ library('tLOH')
 library('purrr')
 library('dplyr')
 ```
-______________
-v0.99.1
+v0.99.2
 
 tLOH: Assessment of evidence for loss of heterozygosity in spatial 
 transcriptomics pre-processed data using Bayes factor calculations.
@@ -50,21 +49,17 @@ e.g. Slide1\_cluster1_alleleCounts.csv, Slide1\_cluster2\_alleleCounts.csv
 
 This data is obtained using the tLOH pre-processing python pipeline. The 
 purpose of this R package is to perform Bayes calculations on the data from the
-output .csv{s} and plot the results. Examples of how to run this tool are below:
+output .csvs and plot the results. Examples of how to run this tool are below:
 
 
-1. tLOHCalc() is the main calculation function. It requires a full path to
-an input directory and sample name.
-```{r marginalCalculations, eval=FALSE, message='hide'}
-## A tar.gz file of example files is in the inst/exdata directory
+1. tLOHCalc() is the main calculation function. It requires a full path to an input directory and sample name.
+```{r marginalCalculations, eval=FALSE}
 
 df <- tLOHCalc('/path/to/sampleDirectory',"sampleName")
 ```
 
 2. plotLOH() is the plotting function. It requires an input dataframe, 
-which will be the output of tLOHCalc, and sample name. Example output df from 
-tLOHCalc is provided in an .rda file in /inst/extdata. The dataframe contains 
-10436 rows and 20 columns. The column descriptions are as follows -
+which will be the output of tLOHCalc, and sample name. Example output df from tLOHCalc is provided in an .rda file in /inst/extdata. The dataframe contains 10436 rows and 20 columns. The column descriptions are as follows -
 
 CHR: chromosome
 POS: position
@@ -93,7 +88,7 @@ CHR_F: chromosome factor
 The function plotLOH returns a list of two plots, which you can visualize 
 individually:
 
-```{r plotting, eval=TRUE, message='hide'}
+```{r plotting, eval=TRUE}
 
 load('../inst/extdata/df.rda')
 listOfPlots <- plotLOH(df,'Example')

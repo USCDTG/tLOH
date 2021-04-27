@@ -1,5 +1,9 @@
 ## tLOH ChangeLog
 
+Changes in version 0.99.2 (2021-04-27)
++ Updated VignetteEngine to knitr::rmarkdown from knitr::knitr in tLOH.Rmd
++ Updated lines in tLOH.Rmd
+
 Changes in version 0.99.1 (2021-04-27)
 + Removed LazyData: true from DESCRIPTION file
 + Updated Description field in the DESCRIPTION file
