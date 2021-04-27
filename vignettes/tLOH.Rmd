@@ -1,7 +1,7 @@
 ---
 title: "tLOH"
 author: "Michelle Webb"
-date: "4/20/2021"
+date: "4/27/2021"
 output: html_document
 vignette: >
   %\VignetteEngine{knitr::knitr}
@@ -16,13 +16,15 @@ library('purrr')
 library('dplyr')
 ```
 ______________
-v0.99.0
+v0.99.1
 
 tLOH: Assessment of evidence for loss of heterozygosity in spatial 
 transcriptomics pre-processed data using Bayes factor calculations.
 
-This tool requires a directory of Visium spatial transcriptomics per-cluster 
-.csv(s) with the following columns:
+This tool requires data produced with the 10X Genomics Visium 
+Spatial Gene Expression platform and processed following the instructions at
+https://github.com/USCDTG/spatialAlleleCountPipeline. The input for tLOH is a
+directory of per-cluster .csv(s) with the following columns:
 
 "CHR" - chromosome            
 "CHR\_withLabel" - chomosome containing the 'chr' prefix            
@@ -60,12 +62,40 @@ df <- tLOHCalc('/path/to/sampleDirectory',"sampleName")
 ```
 
 2. plotLOH() is the plotting function. It requires an input dataframe, 
-which will be the output of tLOHCalc, and sample name. This tool returns a 
-list of two plots, which you can visualize individually:
+which will be the output of tLOHCalc, and sample name. Example output df from 
+tLOHCalc is provided in an .rda file in /inst/extdata. The dataframe contains 
+10436 rows and 20 columns. The column descriptions are as follows -
+
+CHR: chromosome
+POS: position
+REF: reference allele counts
+ALT: alternative allele counts
+TOTAL: total counts
+p(D|het): probability of data given heterozygous event
+p(D|loh): probability of data given loh event
+p(het|D): probability of data given heterozygous event divided by the addition 
+of p(D|het) and p(D|loh)
+p(loh|D): probability of data given loh event divided by the addition of 
+p(D|het) and p(D|loh)
+bayesFactors: Bayes factor value K
+inverseBayes: 1/K
+LogBayesFactors: log of Bayes factor K
+LogInverseBayes: log of 1/K 
+Log10BayesFactors: log 10 of Bayes factor K
+Log10InverseBayes: log 10 of 1/K
+AF: allele fraction
+sample: sample name
+Cluster: cluster number
+Cluster_AF: cluster + AF for plotting y axis
+CHR_F: chromosome factor
+
+
+The function plotLOH returns a list of two plots, which you can visualize 
+individually:
 
 ```{r plotting, eval=TRUE, message='hide'}
 
-load('../data/exampleDF.rda')
+load('../inst/extdata/df.rda')
 listOfPlots <- plotLOH(df,'Example')
 
 listOfPlots[[1]]

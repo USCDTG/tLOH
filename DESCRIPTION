@@ -1,20 +1,27 @@
 Package: tLOH
-Version: 0.99.0
+Version: 0.99.1
 Type: Package
 Date: 2021-04-22
 Title: Assessment of evidence for LOH in spatial transcriptomics pre-processed 
     data using Bayes factor calculations
-Author: Michelle Webb, David Craig
-Maintainer: Michelle Webb <michelgw@usc.edu>
-Description: This tool requires spatial transcriptomics gene expression cluster
-    data and allele count information at likely heterozygous single-nucleotide 
-    polymorphism (SNP) positions. A Bayes factor is calculated to determine 
-    evidence for either the heterozygous event or potential loss of 
-    heterozygosity event.
+Authors@R: c(
+    person("Michelle", "Webb", email="michelgw@usc.edu",role=c("cre","aut")),
+    person("David","Craig",email="davidwcr@usc.edu", role=c("aut"))
+    )
+Description: tLOH, or transcriptomicsLOH, assesses evidence for loss of 
+    heterozygosity (LOH) in pre-processed spatial transcriptomics 
+    data. This tool requires spatial transcriptomics cluster and allele count 
+    information at likely heterozygous single-nucleotide polymorphism (SNP) 
+    positions. Bayes factors are calculated at each SNP to determine likelihood 
+    of potential loss of heterozygosity event.A plotting function is included 
+    to visualize allele fraction and aggregated Bayes factor per chromosome. 
+    Data generated with the 10X Genomics Visium Spatial Gene Expression platform 
+    must be pre-processed using the instructions at 
+    https://github.com/USCDTG/spatialAlleleCountPipeline to obtain an individual 
+    sample directory of per-cluster .csv's for input to tLOH.
 License: MIT + file LICENSE
 URL: https://github.com/USCDTG/tLOH
 Encoding: UTF-8
-LazyData: true
 Suggests: knitr
 Depends: R (>= 3.6.0)
 Imports: scales,

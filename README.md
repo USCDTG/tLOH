@@ -1,5 +1,5 @@
 # tLOH
-### v0.99.0
+### v0.99.1
 Assessment of evidence for loss of heterozygosity in spatial transcriptomics pre-processed data using Bayes factor calculations.
 
 ## About
@@ -94,6 +94,7 @@ Michelle Webb
 michelgw@usc.edu
 
 ## Acknowledgments
+**10X Visium Spatial Gene Expression** https://www.10xgenomics.com/products/spatial-gene-expression              
 **R:** R Core Team (2019). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.     
 **scales:** Hadley Wickham and Dana Seidel (2020). scales: Scale Functions for Visualization. R package version 1.1.1. https://CRAN.R-project.org/package=scales                 
 **tidyverse:** Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
@@ -103,4 +104,3 @@ michelgw@usc.edu
 **dplyr:** Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr: A Grammar of Data Manipulation. R package version 1.0.0. https://CRAN.R-project.org/package=dplyr               
 **Bayes factors** Jeffreys, Harold (1998) [1961]. The Theory of Probability(3rd ed.). 
 Oxford, England. p. 432. ISBN 9780191589676.            
-        
