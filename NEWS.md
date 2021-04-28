@@ -1,5 +1,8 @@
 ## tLOH ChangeLog
 
+Changes in version 0.99.3 (2021-04-27)
++ Updated plotLOH.Rd to not run the code example
+
 Changes in version 0.99.2 (2021-04-27)
 + Updated VignetteEngine to knitr::rmarkdown from knitr::knitr in tLOH.Rmd
 + Updated lines in tLOH.Rmd

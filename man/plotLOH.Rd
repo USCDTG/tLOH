@@ -1,15 +1,15 @@
 \name{plotLOH}
 \alias{plotLOH}
 \title{
-Plot the output from the tLOH function
+Plot the output from the tLOHCalc function
 }
 \description{
 Creates a list of two plots for visualiation of allele
-frequency and bayes factors
+frequency and Bayes factors
 }
 \arguments{
   \item{inputFile}{
-  This is an input file with merged cluster data
+  This is an input dataframe with merged cluster data
 }
   \item{sample}{
   Name of sample
@@ -26,5 +26,5 @@ Michelle Webb
 }
 
 \examples{
-plotLOH <- function(inputFile,sample)
+  \dontrun{plotLOH <- function(df,sample)}
 }
