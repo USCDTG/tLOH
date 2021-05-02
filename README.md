@@ -54,12 +54,12 @@ tLOHOutput <- tLOHCalc(myDF)
 ```
 alleleFrequencyPlot(tLOHOutput,'SampleNameForPlotTitle')
 ```
-![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_alleleFractionPlot.png)              
+![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_alleleFrequencyPlot.png)              
 
 ```
 aggregateCHRPlot(tLOHOutput,'SampleNameForPlotTitle')
 ```
-![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_columnPlot.png)
+![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_aggregateCHRPlot.png)
 
 Dotted line represents stringent threshold for substantial evidence toward Model 2.
 
