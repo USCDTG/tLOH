@@ -24,7 +24,7 @@ Beta value
 }
 
 \value{
-The value returned is an integer
+The value returned from marginalM2CalcBHET is numeric
 }
 
 \author{

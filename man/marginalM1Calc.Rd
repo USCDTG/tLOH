@@ -7,7 +7,7 @@ Calculate marginal of Model 1
 This function takes the number of counts for a reference allele as x,
     and the number of total allele counts as y.
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
 Number of counts for the reference allele.
@@ -20,7 +20,7 @@ Number of counts total at this SNP position.
 The reference and total counts should come from a .csv output by the spatial LOH pre-processing pipeline.
 }
 \value{
-The value returned is an integer.
+The value returned from marginalM1Calc is numeric
 }
 \author{
 Michelle Webb

@@ -1,5 +1,21 @@
 ## tLOH ChangeLog
 
+Changes in version 0.99.4 (2021-05-1)
++ Modified required input format from directory of pre-processed .csv files to a 
+    VCF or VariantAnnotation CollapsedVCF object containing columns for each 
+    cluster
++ Split the plotLOH function into two shorter functions: alleleFrequencyPlot() 
+    and aggregateCHRPlot
++ Removed filtering within tLOHCalc. Detailed information on filtering for next
+    update.
++ Modified NAMESPACE file
++ Added VariantAnnotation and GenomicRanges to README acknowledgments and
+    DESCRIPTION file
++ Removed inst/extdata/sampleData.tar.gz and replaced with Example.vcf
++ Temporarily removed running examples in documentation - will update in 
+    next patch
++ Temporarily removed vignette - will update in next patch
+
 Changes in version 0.99.3 (2021-04-27)
 + Updated plotLOH.Rd to not run the code example
 

@@ -1,33 +1,29 @@
 \name{tLOHCalc}
 \alias{tLOHCalc}
 \title{
-Assement of evidence for spatial LOH
+Assement of evidence for LOH in clusters from spatial transcriptomics data
 }
 \description{
-Takes the output from the tLOH pre-processing pipeline and calculates
-Bayes factors for allele fractions at each SNP position.
+Calculates Bayes factors for allele fractions at each SNP position. Uses 
+dataframe output by either tLOHDataImport or tLOHimportCollapsedVCF
 }
 \usage{
-tLOHCalc(input, sample)
+tLOHCalc(forCalcDF)
 }
 
 \arguments{
-  \item{input}{
-Input directory
-}
-  \item{sample}{
-Sample Name
+  \item{forCalcDF}{
+  input dataframe that can be generated through VCF import or VariantAnnotation 
+  CollapsedVCF import
 }
 }
 
 \value{
-Output is a dataframe
+Output is a dataframe with values that can be visualized with 
+alleleFrequencyPlot() or aggregateCHRPlot()
 }
 
 \author{
 Michelle Webb
 }
 
-\examples{
-\dontrun{tLOHCalc(input, sample)}
-}

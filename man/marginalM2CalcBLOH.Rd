@@ -23,6 +23,10 @@ Beta value
 }
 }
 
+\value{
+The value returned from marginalM2CalcBLOH is numeric
+}
+
 \author{
 Michelle Webb
 }

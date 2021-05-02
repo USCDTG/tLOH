@@ -27,69 +27,107 @@ removeOutlierFromCalc <- function(dataframe, cols, rows, newValue = NA) {
     }
 }
 
-tLOHCalc <- function(input,sample){
-    setupDF <- NULL
-    AC <- list.files(input, pattern=".csv")
-    setupDF <- lapply(AC, function(x){
-        setwd(input)
-        message(paste0("- Running analysis for " ,basename(x)))
-        ac <- read.csv(x, header=TRUE)
-        names(ac) <- c("CHR","CHR_withLabel","POS","POS_oneBefore",
-                       "rsID","vcfQUAL","vcf_refNucleotide","vcf_altNucleotide",
-                       "INFO","vcfAF","genotype","A","C","G","T","REF","ALT")
-        ac$TOTAL <- ac$ALT + ac$REF
-        removeOutlierFromCalc(ac,"TOTAL",which(ac$TOTAL > 2000),NA)
-        ac$CHR <- gsub("chr","",ac$CHR)
-        ac$CHR <- suppressWarnings(as.numeric(ac$CHR))
-        ac <- dplyr::filter(ac, grepl('(0, 1)', genotype) &
-                                grepl('UTR|synonymous', INFO))
-        subset <- ac[c("CHR","POS","REF","ALT","TOTAL")]
-        subset <- subset[complete.cases(subset), ]
-        subset <- subset[which(subset$TOTAL > 10),]
-
-        try({marginalM1 <- apply(subset, MARGIN = 1,
-                                 FUN = marginalM1Calc, y = 0.5)
-        marginalM2_HET <-  apply(subset, MARGIN = 1,
-                                 FUN = marginalM2CalcBHET, a = 10, b = 10)
-        marginalM2_LOH <- apply(subset, MARGIN = 1,
-                                FUN = marginalM2CalcBLOH, a = 10, b = 10)
-        subset$`p(D|het)` <- marginalM2_HET
-        subset$`p(D|loh)` <- marginalM2_LOH
-        added <- subset$`p(D|het)` + subset$`p(D|loh)`
-        subset$`p(het|D)` <- subset$`p(D|het)` / added
-        subset$`p(loh|D)` <- subset$`p(D|loh)` / added
-        subset$bayesFactors <- subset$`p(D|het)` / subset$`p(D|loh)`
-        subset$inverseBayes <- 1 / subset$bayesFactors
-        subset$LogBayesFactors <- log(subset$bayesFactors)
-        subset$LogInverseBayes <- log(subset$inverseBayes)
-        subset$Log10BayesFactors <- log10(subset$bayesFactors)
-        subset$Log10InverseBayes <- log10(subset$inverseBayes)
-        subset$AF <- subset$ALT / subset$TOTAL}, silent=TRUE)
-        subset$sample <- sample
-        subset$Cluster <- unlist(strsplit(basename(x),split="_"))[2]
-        subset$Cluster <- gsub("cluster","",subset$Cluster)
-        subset$`Cluster_AF` <- as.integer(subset$Cluster) + subset$AF
-        subset$CHR_F <- factor(subset$CHR, levels=c('1','2','3','4','5','6','7',
-                                                    '8','9','10','11','12','13',
-                                                    '14','15','16','17','18',
-                                                    '19','20','21','22','23',
-                                                    '24'))
-        subset <- subset[!(subset$CHR == 6 & subset$POS > 28510120
-                           & subset$POS < 33500500),]
-        return(subset)
-    })
-    finalDF <- reduce(setupDF,full_join)
-    return(finalDF)
+tLOHDataImport <- function(vcf){
+    inputVCF <- readVcf(vcf)
+    sampleClusters <- seq(1,dim(inputVCF)[[2]],by=1)
+    intermediateDFList <- lapply(sampleClusters, function(x){
+        counts <- t(data.frame(geno(inputVCF)$AD[,x]))
+        depth <- data.table::melt(geno(inputVCF)$DP)
+        names(depth) <- c("rsID", "CLUSTER", "TOTAL")
+        intermediate <- data.frame(rsID = rownames(counts), 
+                                   REF = counts[,1], 
+                                   ALT = counts[,2],
+                                   CLUSTER = x)
+        intermediate <- merge(depth,intermediate,by=c("rsID", "CLUSTER"))
+        intermediate <- intermediate[intermediate$TOTAL > 0,]
+        rownames(intermediate) <- NULL
+        return(intermediate)})
+    preMergeData <- reduce(intermediateDFList,full_join)
+    gr <- rowRanges(inputVCF)
+    positionList <- data.frame(CHR = seqnames(gr),
+                               POS = start(gr), 
+                               rsID = names(gr))
+    importedDF <- merge(preMergeData, positionList, by = c("rsID"))
+    importedDF <- removeOutlierFromCalc(importedDF,"TOTAL",
+                                            which(importedDF$TOTAL > 2000),NA)
+    return(importedDF)
 }
 
-plotLOH <- function(df,sample){
+tLOHimportCollapsedVCF <- function(variantAnnotationVCF){
+    inputVCF <- variantAnnotationVCF
+    sampleClusters <- seq(1,dim(inputVCF)[[2]],by=1)
+    intermediateDFList <- lapply(sampleClusters, function(x){
+        counts <- t(data.frame(geno(inputVCF)$AD[,x]))
+        depth <- data.table::melt(geno(inputVCF)$DP)
+        names(depth) <- c("rsID", "CLUSTER", "TOTAL")
+        intermediate <- data.frame(rsID = rownames(counts), 
+                                   REF = counts[,1], 
+                                   ALT = counts[,2],
+                                   CLUSTER = x)
+        intermediate <- merge(depth,intermediate,by=c("rsID", "CLUSTER"))
+        intermediate <- intermediate[intermediate$TOTAL > 0,]
+        rownames(intermediate) <- NULL
+        return(intermediate)})
+    preMergeData <- reduce(intermediateDFList,full_join)
+    gr <- matrixStats::rowRanges(inputVCF)
+    positionList <- data.frame(CHR = seqnames(gr),
+                               POS = start(gr), 
+                               rsID = names(gr))
+    importedDF <- merge(preMergeData, positionList, by = c("rsID"))
+    importedDF <- removeOutlierFromCalc(importedDF,"TOTAL",
+                                        which(importedDF$TOTAL > 2000),NA)
+    return(importedDF)
+}
+
+tLOHCalc <- function(forCalcDF){
+    try({
+        forCalcDF <- forCalcDF[complete.cases(
+            forCalcDF), ]
+        marginalM1 <- apply(forCalcDF[,c("REF","TOTAL")], 
+                            MARGIN = 1,
+                            FUN = marginalM1Calc, y = 0.5)
+        marginalM2_HET <-  apply(forCalcDF[,c("REF","TOTAL")],
+                                 MARGIN = 1,
+                                 FUN = marginalM2CalcBHET, a = 10, b = 10)
+        marginalM2_LOH <- apply(forCalcDF[,c("REF","TOTAL")],
+                                MARGIN = 1,
+                                FUN = marginalM2CalcBLOH, a = 10, b = 10)
+        forCalcDF$`p(D|het)` <- marginalM2_HET
+        forCalcDF$`p(D|loh)` <- marginalM2_LOH
+        added <- forCalcDF$`p(D|het)` + forCalcDF$`p(D|loh)`
+        forCalcDF$`p(het|D)` <- forCalcDF$`p(D|het)` / added
+        forCalcDF$`p(loh|D)` <- forCalcDF$`p(D|loh)` / added
+        forCalcDF$bayesFactors <- forCalcDF$`p(D|het)` / forCalcDF$`p(D|loh)`
+        forCalcDF$inverseBayes <- 1 / forCalcDF$bayesFactors
+        forCalcDF$LogBayesFactors <- log(forCalcDF$bayesFactors)
+        forCalcDF$LogInverseBayes <- log(forCalcDF$inverseBayes)
+        forCalcDF$Log10BayesFactors <- log10(forCalcDF$bayesFactors)
+        forCalcDF$Log10InverseBayes <- log10(forCalcDF$inverseBayes)
+        forCalcDF$AF <- forCalcDF$ALT / forCalcDF$TOTAL},
+        silent=TRUE)
+    forCalcDF$`CLUSTER_AF` <- forCalcDF$CLUSTER + 
+        forCalcDF$AF
+    forCalcDF <- forCalcDF[!(forCalcDF$CHR == 6 
+                                           & forCalcDF$POS > 28510120 
+                                           & forCalcDF$POS < 33500500),]
+    forCalcDF$CHR_F <- factor(gsub("chr","",forCalcDF$CHR), 
+                                     levels=c('1','2','3','4','5','6','7',
+                                              '8','9','10','11','12','13',
+                                              '14','15','16','17','18',
+                                              '19','20','21','22','23',
+                                              '24','25'))
+    forCalcDF <- forCalcDF[complete.cases(forCalcDF), ]
+    return(forCalcDF)
+} 
+
+alleleFrequencyPlot <- function(df,sample){
     toPlot <- df
-    uniqueClusters <- seq(1.5,1+length(unique(toPlot$Cluster)), by = 1)
+    uniqueClusters <- seq(1.5,1+length(unique(toPlot$CLUSTER)), by = 1)
     topLimit <- tail(uniqueClusters, n=1) + 0.7
-    ylines <- seq(1,max(unique(toPlot$Cluster)), by = 1)
-    labels <- sprintf("Cluster %s", seq(1,length(unique(toPlot$Cluster)),
+    ylines <- seq(1,max(unique(toPlot$CLUSTER)), by = 1)
+    labels <- sprintf("Cluster %s", seq(1,length(unique(toPlot$CLUSTER)),
                                         by = 1))
-    p1 <- ggplot2::ggplot(toPlot, aes(x = POS, y = `Cluster_AF`,
+    p1 <- ggplot2::ggplot(toPlot, aes(x = POS, y = `CLUSTER_AF`,
                                       size = Log10InverseBayes)) +
         ggtitle(sample) +
         geom_point(size = 0.50, aes(color = Log10InverseBayes), alpha = 0.75) +
@@ -115,23 +153,27 @@ plotLOH <- function(df,sample){
               axis.title.x = element_text(face = "bold"),
               axis.title.y = element_text(face = "bold"),
               axis.text.y = element_text(face = "bold", size = 10))
+    return(p1)
+}
 
-    intermediate <- data.table::setDT(toPlot)
-    toPlot2 <- intermediate[, sum(Log10InverseBayes),by=list(Cluster,CHR)]
-    names(toPlot2) <- c("Cluster","CHR","SumLog10InverseBF")
-    p2 <- ggplot2::ggplot(toPlot2, aes(x = as.factor(Cluster),
+aggregateCHRPlot <- function(df,sample){
+    intermediate <- data.table::setDT(df)
+    toPlot2 <- intermediate[, sum(Log10InverseBayes),by=list(CLUSTER,`CHR_F`)]
+    names(toPlot2) <- c("CLUSTER","CHR_F","SumLog10InverseBF")
+    p2 <- ggplot2::ggplot(toPlot2, aes(x = as.factor(CLUSTER),
                                        y = SumLog10InverseBF,
-                                       fill = as.factor(Cluster),
-                                       color = as.factor(Cluster))) +
+                                       fill = as.factor(CLUSTER),
+                                       color = as.factor(CLUSTER))) +
         geom_bar(stat = "identity") +
-        facet_grid(~CHR, scales = 'free_x', space = 'free_x', switch = 'x') +
+        facet_grid(~`CHR_F`, scales = 'free_x', space = 'free_x', 
+                   switch = 'x') +
         ggtitle(sample) +
         xlab("Chromosome") +
         ylab("Sum of Log10(1/BF)") +
         geom_hline(yintercept=3, linetype="dashed",
                    color = "black", size=0.50) +
         scale_y_continuous(n.breaks = 15) +
-        labs(fill = "Cluster", color = "Cluster") +
+        labs(fill = "CLUSTER", color = "CLUSTER") +
         theme(panel.spacing = unit(0.0001, "lines"),
               panel.background = element_rect(fill = NA, color = NA),
               legend.key = element_rect(colour = NA, fill = NA),
@@ -142,7 +184,5 @@ plotLOH <- function(df,sample){
               axis.title.x = element_text(face = "bold"),
               axis.title.y = element_text(face = "bold"),
               axis.text.y = element_text(face = "bold", size = 10))
-    listOfPlots <- list(p1,p2)
-    return(listOfPlots)
+    return(p2)
 }
-
