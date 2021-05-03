@@ -53,32 +53,6 @@ tLOHDataImport <- function(vcf){
     return(importedDF)
 }
 
-tLOHimportCollapsedVCF <- function(variantAnnotationVCF){
-    inputVCF <- variantAnnotationVCF
-    sampleClusters <- seq(1,dim(inputVCF)[[2]],by=1)
-    intermediateDFList <- lapply(sampleClusters, function(x){
-        counts <- t(data.frame(geno(inputVCF)$AD[,x]))
-        depth <- data.table::melt(geno(inputVCF)$DP)
-        names(depth) <- c("rsID", "CLUSTER", "TOTAL")
-        intermediate <- data.frame(rsID = rownames(counts), 
-                                   REF = counts[,1], 
-                                   ALT = counts[,2],
-                                   CLUSTER = x)
-        intermediate <- merge(depth,intermediate,by=c("rsID", "CLUSTER"))
-        intermediate <- intermediate[intermediate$TOTAL > 0,]
-        rownames(intermediate) <- NULL
-        return(intermediate)})
-    preMergeData <- reduce(intermediateDFList,full_join)
-    gr <- matrixStats::rowRanges(inputVCF)
-    positionList <- data.frame(CHR = seqnames(gr),
-                               POS = start(gr), 
-                               rsID = names(gr))
-    importedDF <- merge(preMergeData, positionList, by = c("rsID"))
-    importedDF <- removeOutlierFromCalc(importedDF,"TOTAL",
-                                        which(importedDF$TOTAL > 2000),NA)
-    return(importedDF)
-}
-
 tLOHCalc <- function(forCalcDF){
     try({
         forCalcDF <- forCalcDF[complete.cases(

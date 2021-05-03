@@ -5,7 +5,7 @@ Assement of evidence for LOH in clusters from spatial transcriptomics data
 }
 \description{
 Calculates Bayes factors for allele fractions at each SNP position. Uses 
-dataframe output by either tLOHDataImport or tLOHimportCollapsedVCF
+dataframe output by tLOHDataImport
 }
 \usage{
 tLOHCalc(forCalcDF)
@@ -13,8 +13,7 @@ tLOHCalc(forCalcDF)
 
 \arguments{
   \item{forCalcDF}{
-  input dataframe that can be generated through VCF import or VariantAnnotation 
-  CollapsedVCF import
+  input dataframe generated from the tLOHDataImport function,
 }
 }
 
@@ -27,3 +26,8 @@ alleleFrequencyPlot() or aggregateCHRPlot()
 Michelle Webb
 }
 
+\examples{
+data('dataExample')
+df <- tLOHCalc(dataExample)
+head(df)
+}

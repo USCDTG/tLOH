@@ -1,11 +1,11 @@
 # tLOH
-### v0.99.4
+### v0.99.5
 Assessment of evidence for loss of heterozygosity in spatial transcriptomics pre-processed data using Bayes factor calculations.
 
 ## About
 Loss of heterozygosity (LOH) refers to a genomic event where a chromosomal region on one allele is lost. Evidence for this event can be calculated by examining allele frequency (AF), or the ratio of alleles, at known heterozygous positions. AF at a known heterozygous (single nucleotide polymorphism) SNP should be around 0.50, where half of the sequencing reads at that position align to the reference allele and half to the alternative. As AF approaches 0 or 1, this represents an uneven distribution of counts to either reference or alternative. Bayesian statistics can be used to assess the ratio of likelihood of a heterozygous or LOH event at each SNP.         
 
-The functions included in this package allow for calculation of a Bayes factor at each SNP provided. A 10X Genomics Visium spatial transcriptomics BAM must be pre-processed to obtain a VCF with sample columns for each cluster (graph or k-means). A detailed pipeline will be provided in future release, though steps are as follows: Separate a spatial transcriptomics BAM into per-cluster BAM files, filter reads for heterozygous or likely heterozygous SNP positions, obtain allele counts, and store data in VCF format with columns for each cluster. Required fields are DP (read depth) and AD (counts for reference and alternative alleles). Data can be imported as a VCF or a VariantAnnotation Collapsed VCF object by separate functions. Output from this R package includes a dataframe with Bayes factor calculations for all clusters at all sites. There are two separate plotting function in the package to visualize allele fraction and aggregated Bayes factors per chromosome.
+The functions included in this package allow for calculation of a Bayes factor at each SNP provided. A 10X Genomics Visium spatial transcriptomics BAM must be pre-processed to obtain a VCF with sample columns for each cluster (graph or k-means). A detailed pipeline will be provided in future release, though steps are as follows: Separate a spatial transcriptomics BAM into per-cluster BAM files, filter reads for heterozygous or likely heterozygous SNP positions, obtain allele counts, and store data in VCF format with columns for each cluster. Required fields are DP (read depth) and AD (counts for reference and alternative alleles). Data import format is a VCF. Output from this R package includes a dataframe with Bayes factor calculations for all clusters at all sites. There are two separate plotting function in the package to visualize allele fraction and aggregated Bayes factors per chromosome.
 
 ![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/bayesFactor.png)
 
@@ -36,13 +36,11 @@ R
 ```
 
 ## Usage
-An example VCF is available in the /inst/extdata directory as Example.vcf. tLOH can read in a VCF with the function tLOHDataImport(), or a VariantAnnotation CollapsedVCF object can be read in using tLOHimportCollapsedVCF.          
+An example VCF is available in the /inst/extdata directory as Example.vcf. tLOH can read in a VCF with the function tLOHDataImport().
 
 ####  Data Import
 ```
-myDF <- tLOHDataImport('/full/path/to/Example/vcf') 
-# or            
-myDF <- tLOHimportCollapsedVCF(vcfObject)      
+myDF <- tLOHDataImport('/full/path/to/Example/vcf')    
 ```
 
 #### tLOH Calculation of Bayes factors
@@ -91,7 +89,13 @@ michelgw@usc.edu
 **data.table:** Matt Dowle and Arun Srinivasan (2020). data.table: Extension of \`data.frame\`. R package version 1.13.0. https://CRAN.R-project.org/package=data.table          
 **purrr:** Lionel Henry and Hadley Wickham (2020). purrr: Functional Programming Tools. R package version 0.3.4. https://CRAN.R-project.org/package=purrr               
 **dplyr:** Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr: A Grammar of Data Manipulation. R package version 1.0.0. https://CRAN.R-project.org/package=dplyr           
-**VariantAnnotation:** Obenchain V, Lawrence M, Carey V, Gogarten S, Shannon P, Morgan M (2014).“VariantAnnotation: a Bioconductor package for exploration and annotation ofgenetic variants.” _Bioinformatics_, *30*(14), 2076-2078. doi:10.1093/bioinformatics/btu168 (URL:https://doi.org/10.1093/bioinformatics/btu168).   
-**GenomicRanges:** Lawrence M, Huber W, Pag\`es H, Aboyoun P, Carlson M, et al. (2013) Software  for Computing and Annotating Genomic Ranges. PLoS Comput Biol 9(8): e1003118.  doi:10.1371/journal.pcbi.1003118             
+**VariantAnnotation:** Obenchain V, Lawrence M, Carey V, Gogarten S, Shannon P, Morgan M (2014).
+“VariantAnnotation: a Bioconductor package for exploration and annotation of
+genetic variants.” _Bioinformatics_, *30*(14), 2076-2078. doi:
+10.1093/bioinformatics/btu168 (URL:
+https://doi.org/10.1093/bioinformatics/btu168).   
+**GenomicRanges:** Lawrence M, Huber W, Pag\`es H, Aboyoun P, Carlson M, et al. (2013) Software
+  for Computing and Annotating Genomic Ranges. PLoS Comput Biol 9(8): e1003118.
+  doi:10.1371/journal.pcbi.1003118             
 **Bayes factors** Jeffreys, Harold (1998) [1961]. The Theory of Probability(3rd ed.). 
 Oxford, England. p. 432. ISBN 9780191589676.            

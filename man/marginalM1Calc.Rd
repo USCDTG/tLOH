@@ -17,7 +17,8 @@ Number of counts total at this SNP position.
 }
 }
 \details{
-The reference and total counts should come from a .csv output by the spatial LOH pre-processing pipeline.
+The reference and total counts should come from a .csv output by the spatial 
+LOH pre-processing pipeline.
 }
 \value{
 The value returned from marginalM1Calc is numeric

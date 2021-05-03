@@ -25,3 +25,9 @@ and max of 1
 \author{
 Michelle Webb
 }
+
+\examples{
+data('dataExample')
+df <- tLOHCalc(dataExample)
+alleleFrequencyPlot(df,"Example")
+}

@@ -23,3 +23,8 @@ Output is a dataframe with required fields for tLOHCalc
 Michelle Webb
 }
 
+\examples{
+    \dontrun{
+    R.utils::gunzip("inst/extdata/Example.vcf.gz","inst/extdata/Example.vcf")
+    exampleDF <- tLOHDataImport("inst/extdata/Example.vcf")}
+}

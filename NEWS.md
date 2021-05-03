@@ -1,4 +1,8 @@
 ## tLOH ChangeLog
+Changes in version 0.99.5 (2021-05-3)
++ Added back in vignette
++ Added running examples to documentation
++ Modified required input format to be only a VCF. Future option will include pre-processed CollapsedVCF object as well
 
 Changes in version 0.99.4 (2021-05-1)
 + Modified required input format from directory of pre-processed .csv files to a 

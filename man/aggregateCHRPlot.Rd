@@ -26,3 +26,9 @@ Bayes factor) per chromosome and the x axis is chromosome
 \author{
 Michelle Webb
 }
+
+\examples{
+data('dataExample')
+df <- tLOHCalc(dataExample)
+aggregateCHRPlot(df,"Example")
+}

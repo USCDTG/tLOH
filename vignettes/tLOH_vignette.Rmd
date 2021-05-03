@@ -1,0 +1,80 @@
+---
+title: "tLOH"
+author: "Michelle Webb"
+date: "5/3/2021"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{tLOH}
+  %\usepackage[UTF-8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library('tLOH')
+library('purrr')
+library('dplyr')
+library('GenomicRanges')
+library('VariantAnnotation')
+```
+v0.99.5
+
+tLOH: Assessment of evidence for loss of heterozygosity in spatial 
+transcriptomics pre-processed data using Bayes factor calculations.
+
+This tool requires data produced with the 10X Genomics Visium 
+Spatial Gene Expression platform and processed to obtain a VCF with per-cluster 
+allele count information at heterozygous SNP positions. The purpose of this R 
+package is to perform Bayes calculations on the data from the VCF and plot the 
+results. Examples of how to run this tool are below:
+
+
+1. tLOHDataImport() is a function to import data for use by tLOHCalc(). The 
+input is a VCF file, an example can be found in the inst/extdata folder.
+
+```{r dataImport, eval=FALSE, warnings = FALSE}
+exampleData <- tLOHDataImport('../inst/extdata/Example.vcf')
+# The VCF file in inst/extdata must be decompressed before running this command
+```
+
+2. tLOHCalc() is the main calculation function. It requires the output 
+directory from tLOHDataImport().
+```{r marginalCalculations, eval=TRUE}
+load("../data/dataExample.rda")
+df <- tLOHCalc(dataExample)
+head(df)
+```
+
+The column descriptions for the output dataframe are as follows -
+CHR: chromosome
+POS: position
+REF: reference allele counts
+ALT: alternative allele counts
+TOTAL: total counts
+p(D|het): probability of data given heterozygous event
+p(D|loh): probability of data given loh event
+p(het|D): probability of data given heterozygous event divided by the addition 
+of p(D|het) and p(D|loh)
+p(loh|D): probability of data given loh event divided by the addition of 
+p(D|het) and p(D|loh)
+bayesFactors: Bayes factor value K
+inverseBayes: 1/K
+LogBayesFactors: log of Bayes factor K
+LogInverseBayes: log of 1/K 
+Log10BayesFactors: log 10 of Bayes factor K
+Log10InverseBayes: log 10 of 1/K
+AF: allele fraction
+Cluster: cluster number
+Cluster_AF: cluster + AF for plotting y axis
+CHR_F: chromosome factor
+
+3. tLOH has two plotting functions, alleleFrequencyPlot() and aggregateCHRPlot. 
+Both require the output dataframe from running tLOHCalc, and a same name for 
+the plot title. Example images of these plots are available in inst/extdata.
+
+```{r plotting, eval=TRUE}
+alleleFrequencyPlot(df, "Example")
+
+aggregateCHRPlot(df, "Example")
+```
+

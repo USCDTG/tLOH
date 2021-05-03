@@ -1,7 +1,7 @@
 Package: tLOH
-Version: 0.99.4
+Version: 0.99.5
 Type: Package
-Date: 2021-05-1
+Date: 2021-05-3
 Title: Assessment of evidence for LOH in spatial transcriptomics pre-processed 
     data using Bayes factor calculations
 Authors@R: c(
