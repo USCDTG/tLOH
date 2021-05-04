@@ -1,4 +1,9 @@
 ## tLOH ChangeLog
+
+Changes in version 0.99.9 (2021-05-4)
++ Added humanGBMsampleAC.Rd file to man/
++ Added RoxygenNote line to DESCRIPTION
+
 Changes in version 0.99.8 (2021-05-4)
 + Added import(DelayedArray) to NAMESPACE, was previously already in 
     DESCRIPTION imports field

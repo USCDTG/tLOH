@@ -1,5 +1,5 @@
 Package: tLOH
-Version: 0.99.8
+Version: 0.99.9
 Type: Package
 Date: 2021-05-4
 Title: Assessment of evidence for LOH in spatial transcriptomics pre-processed 
@@ -38,3 +38,4 @@ VignetteBuilder: knitr
 BugReports: https://github.com/USCDTG/tLOH/issues
 biocViews: CopyNumberVariation, Transcription, SNP, GeneExpression, 
     Transcriptomics
+RoxygenNote: 7.1.1
