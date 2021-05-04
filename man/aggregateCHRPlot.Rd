@@ -28,7 +28,7 @@ Michelle Webb
 }
 
 \examples{
-data('dataExample')
-df <- tLOHCalc(dataExample)
+data('humanGBMsampleAC')
+df <- tLOHCalc(humanGBMsampleAC)
 aggregateCHRPlot(df,"Example")
 }

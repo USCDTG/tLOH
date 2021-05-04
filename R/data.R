@@ -1,7 +1,9 @@
-#' Imported dataset processed with tLOHImportData.
-#' @name dataExample
-#' @description A dataset containing the allele count information for 9 spatial
-#' transcriptomics clusters
+#' Imported dataset of a human glioblastoma spatial transcriptomics sample 
+#' processed with tLOHImportData.
+#' 
+#' @name humanGBMsampleAC
+#' @description A dataset of a human glioblastoma sample containing the allele 
+#' count (AC) information for 9 spatial transcriptomics clusters
 #'
 #' @format A data frame with 34601 rows and 7 variables:
 #' \describe{
@@ -15,7 +17,7 @@
 #' }
 #' @docType data
 #' @keywords datasets
-#' @source  Lab data repository
+#' @source  Craig Lab data repository
 #' @examples 
-#' data("dataExample")
-"dataExample"
+#' data("humanGBMsampleAC")
+"humanGBMsampleAC"

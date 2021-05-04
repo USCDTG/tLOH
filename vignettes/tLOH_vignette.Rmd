@@ -40,8 +40,8 @@ exampleData <- tLOHDataImport('../inst/extdata/Example.vcf')
 2. tLOHCalc() is the main calculation function. It requires the output 
 directory from tLOHDataImport().
 ```{r marginalCalculations, eval=TRUE}
-load("../data/dataExample.rda")
-df <- tLOHCalc(dataExample)
+load("../data/humanGBMsampleAC.rda")
+df <- tLOHCalc(humanGBMsampleAC)
 head(df)
 ```
 
