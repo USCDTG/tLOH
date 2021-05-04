@@ -1,5 +1,10 @@
 ## tLOH ChangeLog
 
+Changes in version 0.99.7 (2021-05-4)
++ Renamed the data/dataExample.rda to data/humanGBMsampleAC.rda, which is a set 
+    of pre-processed allele counts from a human glioblastoma sample analyzed 
+    with the 10X Genomics Visium Spatial Gene Expression platform
+
 Changes in version 0.99.6 (2021-05-4)
 + Testing dependency fix
 + Fixed typos
