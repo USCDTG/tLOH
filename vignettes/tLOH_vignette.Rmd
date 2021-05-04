@@ -1,7 +1,7 @@
 ---
 title: "tLOH"
 author: "Michelle Webb"
-date: "5/3/2021"
+date: "5/4/2021"
 output: html_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,7 +17,7 @@ library('dplyr')
 library('GenomicRanges')
 library('VariantAnnotation')
 ```
-v0.99.5
+v0.99.6
 
 tLOH: Assessment of evidence for loss of heterozygosity in spatial 
 transcriptomics pre-processed data using Bayes factor calculations.
@@ -68,9 +68,10 @@ Cluster: cluster number
 Cluster_AF: cluster + AF for plotting y axis
 CHR_F: chromosome factor
 
-3. tLOH has two plotting functions, alleleFrequencyPlot() and aggregateCHRPlot. 
-Both require the output dataframe from running tLOHCalc, and a same name for 
-the plot title. Example images of these plots are available in inst/extdata.
+3. tLOH has two plotting functions, alleleFrequencyPlot() and 
+aggregateCHRPlot(). Both require the output dataframe from running tLOHCalc, 
+and a sample name for the plot title. Example images of these plots are 
+available in inst/extdata.
 
 ```{r plotting, eval=TRUE}
 alleleFrequencyPlot(df, "Example")

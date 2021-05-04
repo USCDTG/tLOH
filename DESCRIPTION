@@ -1,7 +1,7 @@
 Package: tLOH
-Version: 0.99.5
+Version: 0.99.6
 Type: Package
-Date: 2021-05-3
+Date: 2021-05-4
 Title: Assessment of evidence for LOH in spatial transcriptomics pre-processed 
     data using Bayes factor calculations
 Authors@R: c(
@@ -33,7 +33,8 @@ Imports: scales,
     dplyr,
     matrixStats,
     VariantAnnotation,
-    GenomicRanges
+    GenomicRanges,
+    DelayedArray
 VignetteBuilder: knitr
 BugReports: https://github.com/USCDTG/tLOH/issues
 biocViews: CopyNumberVariation, Transcription, SNP, GeneExpression, 

@@ -1,7 +1,7 @@
 #' Imported dataset processed with tLOHImportData.
 #' @name dataExample
 #' @description A dataset containing the allele count information for 9 spatial
-#'transcriptomics clusters
+#' transcriptomics clusters
 #'
 #' @format A data frame with 34601 rows and 7 variables:
 #' \describe{

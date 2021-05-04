@@ -13,7 +13,7 @@ tLOHCalc(forCalcDF)
 
 \arguments{
   \item{forCalcDF}{
-  input dataframe generated from the tLOHDataImport function,
+  Input dataframe generated from the tLOHDataImport function
 }
 }
 

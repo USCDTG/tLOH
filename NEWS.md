@@ -1,4 +1,9 @@
 ## tLOH ChangeLog
+
+Changes in version 0.99.6 (2021-05-4)
++ Testing dependency fix
++ Fixed typos
+
 Changes in version 0.99.5 (2021-05-3)
 + Added back in vignette
 + Added running examples to documentation
