@@ -1,4 +1,10 @@
 ## tLOH ChangeLog
+Changes in version 0.99.8 (2021-05-4)
++ Added import(DelayedArray) to NAMESPACE, was previously already in 
+    DESCRIPTION imports field
++ Changed matrixStats rowRanges to DelayedArray rowRanges in functions.R
++ Removed import of matrixStats rowRanges from NAMESPACE
++ Adjusted formatting in humanGBMsampleAC field of R/data.R documentation
 
 Changes in version 0.99.7 (2021-05-4)
 + Renamed the data/dataExample.rda to data/humanGBMsampleAC.rda, which is a set 

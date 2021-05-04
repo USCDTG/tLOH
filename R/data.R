@@ -17,7 +17,6 @@
 #' }
 #' @docType data
 #' @keywords datasets
-#' @source  Craig Lab data repository
-#' @examples 
-#' data("humanGBMsampleAC")
+#' @source Craig Lab data repository
+#' @examples data("humanGBMsampleAC")
 "humanGBMsampleAC"

@@ -1,5 +1,5 @@
 Package: tLOH
-Version: 0.99.7
+Version: 0.99.8
 Type: Package
 Date: 2021-05-4
 Title: Assessment of evidence for LOH in spatial transcriptomics pre-processed 
@@ -31,7 +31,6 @@ Imports: scales,
     data.table,
     purrr,
     dplyr,
-    matrixStats,
     VariantAnnotation,
     GenomicRanges,
     DelayedArray

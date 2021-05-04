@@ -32,7 +32,7 @@ tLOHDataImport <- function(vcf){
     sampleClusters <- seq(1,dim(inputVCF)[[2]],by=1)
     intermediateDFList <- lapply(sampleClusters, function(x){
         counts <- t(data.frame(geno(inputVCF)$AD[,x]))
-        depth <- data.table::melt(geno(inputVCF)$DP)
+        depth <- suppressWarnings(data.table::melt(geno(inputVCF)$DP))
         names(depth) <- c("rsID", "CLUSTER", "TOTAL")
         intermediate <- data.frame(rsID = rownames(counts), 
                                    REF = counts[,1], 
@@ -43,13 +43,13 @@ tLOHDataImport <- function(vcf){
         rownames(intermediate) <- NULL
         return(intermediate)})
     preMergeData <- reduce(intermediateDFList,full_join)
-    gr <- rowRanges(inputVCF)
+    gr <- DelayedArray::rowRanges(inputVCF)
     positionList <- data.frame(CHR = seqnames(gr),
                                POS = start(gr), 
                                rsID = names(gr))
     importedDF <- merge(preMergeData, positionList, by = c("rsID"))
     importedDF <- removeOutlierFromCalc(importedDF,"TOTAL",
-                                            which(importedDF$TOTAL > 2000),NA)
+                                        which(importedDF$TOTAL > 2000),NA)
     return(importedDF)
 }
 
