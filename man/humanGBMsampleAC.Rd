@@ -21,7 +21,7 @@ A data frame with 34601 rows and 7 variables:
 Craig Lab data repository
 }
 \usage{
-humanGBMsampleAC
+data("humanGBMsampleAC")
 }
 \description{
 A dataset of a human glioblastoma sample containing the allele 

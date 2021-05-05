@@ -1,7 +1,7 @@
 ---
 title: "tLOH"
 author: "Michelle Webb"
-date: "5/4/2021"
+date: "5/5/2021"
 output: html_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,7 +17,7 @@ library('dplyr')
 library('GenomicRanges')
 library('VariantAnnotation')
 ```
-v0.99.9
+v0.99.10
 
 tLOH: Assessment of evidence for loss of heterozygosity in spatial 
 transcriptomics pre-processed data using Bayes factor calculations.

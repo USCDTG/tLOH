@@ -1,5 +1,11 @@
 ## tLOH ChangeLog
 
+Changes in version 0.99.10 (2021-05-05)
++ Replaced DelayedArray in DESCRIPTION imports field with MatrixGenerics,
+    updated NAMESPACE
++ Updated R dependency to R (>= 4.0)
++ Updated tLOHDataImport and tLOHCalc functions
+
 Changes in version 0.99.9 (2021-05-4)
 + Added humanGBMsampleAC.Rd file to man/
 + Added RoxygenNote line to DESCRIPTION
@@ -23,11 +29,11 @@ Changes in version 0.99.6 (2021-05-4)
 Changes in version 0.99.5 (2021-05-3)
 + Added back in vignette
 + Added running examples to documentation
-+ Modified required input format to be only a VCF. Future option will include pre-processed CollapsedVCF object as well
++ Modified required input format to be only a VCF. Future option will include             pre-processed CollapsedVCF object as well
 
 Changes in version 0.99.4 (2021-05-1)
-+ Modified required input format from directory of pre-processed .csv files to a 
-    VCF or VariantAnnotation CollapsedVCF object containing columns for each 
++ Modified required input format from directory of pre-processed .csv files to 
+    a VCF or VariantAnnotation CollapsedVCF object containing columns for each 
     cluster
 + Split the plotLOH function into two shorter functions: alleleFrequencyPlot() 
     and aggregateCHRPlot

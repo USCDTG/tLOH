@@ -32,7 +32,9 @@ tLOHDataImport <- function(vcf){
     sampleClusters <- seq(1,dim(inputVCF)[[2]],by=1)
     intermediateDFList <- lapply(sampleClusters, function(x){
         counts <- t(data.frame(geno(inputVCF)$AD[,x]))
-        depth <- suppressWarnings(data.table::melt(geno(inputVCF)$DP))
+        depth <- suppressWarnings(data.frame(data.table::melt(as.data.table(
+            as.data.frame(geno(inputVCF)$DP), keep.rownames = "rsID"), 
+            variable.name = "CLUSTER", value.name = "TOTAL")))
         names(depth) <- c("rsID", "CLUSTER", "TOTAL")
         intermediate <- data.frame(rsID = rownames(counts), 
                                    REF = counts[,1], 
@@ -43,7 +45,7 @@ tLOHDataImport <- function(vcf){
         rownames(intermediate) <- NULL
         return(intermediate)})
     preMergeData <- reduce(intermediateDFList,full_join)
-    gr <- DelayedArray::rowRanges(inputVCF)
+    gr <- rowRanges(inputVCF)
     positionList <- data.frame(CHR = seqnames(gr),
                                POS = start(gr), 
                                rsID = names(gr))
@@ -55,8 +57,7 @@ tLOHDataImport <- function(vcf){
 
 tLOHCalc <- function(forCalcDF){
     try({
-        forCalcDF <- forCalcDF[complete.cases(
-            forCalcDF), ]
+        forCalcDF <- forCalcDF[complete.cases(forCalcDF), ]
         marginalM1 <- apply(forCalcDF[,c("REF","TOTAL")], 
                             MARGIN = 1,
                             FUN = marginalM1Calc, y = 0.5)
@@ -79,8 +80,8 @@ tLOHCalc <- function(forCalcDF){
         forCalcDF$Log10InverseBayes <- log10(forCalcDF$inverseBayes)
         forCalcDF$AF <- forCalcDF$ALT / forCalcDF$TOTAL},
         silent=TRUE)
-    forCalcDF$`CLUSTER_AF` <- forCalcDF$CLUSTER + 
-        forCalcDF$AF
+    forCalcDF$CLUSTER <- as.numeric(forCalcDF$CLUSTER)
+    forCalcDF$`CLUSTER_AF` <- forCalcDF$CLUSTER + forCalcDF$AF
     forCalcDF <- forCalcDF[!(forCalcDF$CHR == 6 
                                            & forCalcDF$POS > 28510120 
                                            & forCalcDF$POS < 33500500),]
