@@ -1,5 +1,10 @@
 ## tLOH ChangeLog
 
+Changes in version 1.5.1
++ Updated version numbering to match Bioconductor standard
++ Updated DESCRIPTION file
++ Updated README file
+
 Changes in version 0.99.10 (2021-05-05)
 + Replaced DelayedArray in DESCRIPTION imports field with MatrixGenerics,
     updated NAMESPACE
