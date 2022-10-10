@@ -161,3 +161,13 @@ aggregateCHRPlot <- function(df,sample){
               axis.text.y = element_text(face = "bold", size = 10))
     return(p2)
 }
+
+modePeakCalc <- function(x) {
+    if(length(x) > 1){
+        den <- density(x, kernel=c("gaussian"))
+        ( den$x[den$y==max(den$y)] )     
+    } else if(length(x) == 1){
+        den <- x
+    }
+}
+
