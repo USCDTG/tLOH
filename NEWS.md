@@ -1,5 +1,8 @@
 ## tLOH ChangeLog
 
+Changes in version 1.5.2
++ Added mode peak calculation function
+
 Changes in version 1.5.1
 + Updated version numbering to match Bioconductor standard
 + Updated DESCRIPTION file
