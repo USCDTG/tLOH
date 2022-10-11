@@ -1,5 +1,8 @@
 ## tLOH ChangeLog
 
+Changes in version 1.5.3
++ Added documenation of function and synced repositories
+
 Changes in version 1.5.2
 + Added mode peak calculation function
 
