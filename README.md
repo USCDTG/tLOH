@@ -1,5 +1,5 @@
 # tLOH
-### v1.5.3
+### v1.5.4
 Assessment of evidence for loss of heterozygosity in spatial transcriptomics pre-processed data using Bayes factor calculations.
 
 ## About
@@ -9,14 +9,14 @@ The functions included in this package allow for calculation of a Bayes factor a
 
 ![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/bayesFactor.png)
 
-M1 and M2 are independent events                
+M1 and M2 are independent events
 
-Pr(M1|D) - Probability of Model 1 given data            
-Pr(M2|D) - Probability of Model 2 given data             
-Pr(M1) - Probability of Model 1                 
-Pr(M2) - Probabiliy of Model 2                
-              
-For this tool, the Pr(M1) is set at 0.5 for a heterozygous event. Alpha and Beta in the beta distribution are set at 10 and 10, respectively.         
+Pr(M1|D) - Probability of Model 1 given data
+Pr(M2|D) - Probability of Model 2 given data
+Pr(M1) - Probability of Model 1
+Pr(M2) - Probabiliy of Model 2
+
+For this tool, the Pr(M1) is set at 0.5 for a heterozygous event. Alpha and Beta in the beta distribution are set at 10 and 10, respectively.
 
 ## Installation
 After downloading the R package .zip file from GitHub, convert to tar.gz and run the following commands:
@@ -40,7 +40,7 @@ An example VCF is available in the /inst/extdata directory as Example.vcf. tLOH 
 
 ####  Data Import
 ```
-myDF <- tLOHDataImport('/full/path/to/Example/vcf')    
+myDF <- tLOHDataImport('/full/path/to/Example/vcf')
 ```
 
 #### tLOH Calculation of Bayes factors
@@ -52,7 +52,7 @@ tLOHOutput <- tLOHCalc(myDF)
 ```
 alleleFrequencyPlot(tLOHOutput,'SampleNameForPlotTitle')
 ```
-![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_alleleFrequencyPlot.png)              
+![alt text](https://github.com/USCDTG/tLOH/blob/main/inst/extdata/Example_alleleFrequencyPlot.png)
 
 ```
 aggregateCHRPlot(tLOHOutput,'SampleNameForPlotTitle')
@@ -65,7 +65,7 @@ Dotted line represents stringent threshold for substantial evidence toward Model
 This version is optimized for human data aligned to GRCh38. The HLA region on chromosome 6 is omitted from this analysis (chr6:28510120-33500500), but will be analyzed in further versions. SNP positions with total allele counts above 2000 were not included, but will be considered in future release. Additional visualizations and SNP annotation/filtering guidelines and are planned for future patch.
 
 ## Prerequisites
-- R (>= 3.5.0)
+- R (>= 4.2.0)
 - scales    
 - tidyverse
 - ggplot2
@@ -74,7 +74,10 @@ This version is optimized for human data aligned to GRCh38. The HLA region on ch
 - dplyr
 - VariantAnnotation
 - GenomicRanges
-
+- naniar
+- depmixS4
+- stringr
+- stats
 
 ## Contact
 Michelle Webb  
@@ -82,7 +85,8 @@ michelgw@usc.edu
 
 ## Acknowledgments
 **10X Visium Spatial Gene Expression** https://www.10xgenomics.com/products/spatial-gene-expression              
-**R:** R Core Team (2019). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.     
+**R:** R Core Team (2019). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+**depmixS4** Visser I, Speekenbrink M (2010). “depmixS4: An R Package for Hidden Markov Models.” Journal of Statistical Software, 36(7), 1–21. https://www.jstatsoft.org/v36/i07/.
 **scales:** Hadley Wickham and Dana Seidel (2020). scales: Scale Functions for Visualization. R package version 1.1.1. https://CRAN.R-project.org/package=scales                 
 **tidyverse:** Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
 **ggplot2:** H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York 2016.         
@@ -98,4 +102,9 @@ https://doi.org/10.1093/bioinformatics/btu168).
   for Computing and Annotating Genomic Ranges. PLoS Comput Biol 9(8): e1003118.
   doi:10.1371/journal.pcbi.1003118             
 **Bayes factors** Jeffreys, Harold (1998) [1961]. The Theory of Probability(3rd ed.). 
-Oxford, England. p. 432. ISBN 9780191589676.            
+Oxford, England. p. 432. ISBN 9780191589676.  
+**Best Normalize** Peterson RA (2021). “Finding Optimal Normalizing Transformations via bestNormalize.” The R Journal, 13(1), 310–329. doi:10.32614/RJ-2021-041.
+Peterson RA, Cavanaugh JE (2020). “Ordered quantile normalization: a semiparametric transformation built for the cross-validation era.” Journal of Applied Statistics, 47(13-15), 2312-2327. doi:10.1080/02664763.2019.1630372.
+**Naniar** https://cran.r-project.org/web/packages/naniar/index.html
+
+

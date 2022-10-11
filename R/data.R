@@ -21,3 +21,21 @@
 #' @examples data("humanGBMsampleAC")
 #' @usage data("humanGBMsampleAC")
 "humanGBMsampleAC"
+
+
+#' Imported dataset of sample start probabilities for hiddenMarkovAnalysis
+#' 
+#' @name initialStartProbabilities
+#' @description A dataset of initial start probabilities to use with the HMM
+#' analysis. Users may create their own dataset using the same format
+#' @format A data frame with 22 rows and 2 variables:
+#' \describe{
+#'   \item{initProb1}{Initial Probability 1}
+#'   \item{initProb2}{Initial Probability 2}
+#' }
+#' @docType data
+#' @keywords datasets
+#' @source Craig Lab data repository
+#' @examples data("initialStartProbabilities")
+#' @usage data("initialStartProbabilities")
+"initialStartProbabilities"

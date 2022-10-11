@@ -1,7 +1,14 @@
 ## tLOH ChangeLog
 
+Changes in version 1.5.4
++ Added new set of functions for an experimental workflow with documentation.
++ Updated functions.R, globals.R, data.R
++ Added new .rda file for an example in manual files
++ Updated DESCRIPTION and NAMESPACE
++ Updated the Acknowledgment section in the README to cite additional packages added to workflow
+
 Changes in version 1.5.3
-+ Added documenation of function and synced repositories
++ Added documentation of function and synced repositories
 
 Changes in version 1.5.2
 + Added mode peak calculation function
