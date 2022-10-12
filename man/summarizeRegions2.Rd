@@ -25,7 +25,7 @@ Michelle Webb
 }
 
 \examples{
-\donttest{
+\dontrun{
 data('humanGBMsampleAC')
 data('initialStartProbabilities')
 df <- tLOHCalcUpdate(humanGBMsampleAC,1.25,1.25,500,500,4)

@@ -167,6 +167,7 @@ tLOHCalcUpdate <- function(forCalcDF,alpha1,beta1,alpha2,beta2,countThreshold){
     forCalcDF$beta <- beta1
     forCalcDF$alpha2 <- alpha2
     forCalcDF$beta2 <- beta2
+    forCalcDF <- dplyr::arrange(forCalcDF,CLUSTER,CHR,POS)
     return(forCalcDF)
 }
 alleleFrequencyPlot <- function(df,sample){
@@ -467,7 +468,7 @@ regionFinalize <- function(finalList1){
         dplyr::filter(quantile(TOTAL, 0.75)<TOTAL) |>
         dplyr::select(AF)
     valuesToTest$DeltaAlleleFraction <- abs(valuesToTest$AF-0.5)
-    dt <- data.table(valuesToTest)
+    dt <- data.table::data.table(valuesToTest)
     dt2 <- dt[, modePeakCalc(DeltaAlleleFraction), by= segmentNumber]
     names(dt2)[2] <- 'modePeak'
     dt2 <- data.frame(merge(dt2,dt,by='segmentNumber'))
@@ -476,18 +477,7 @@ regionFinalize <- function(finalList1){
     lookup <- unique(dt2[c('segmentNumber','modePeak')])
     final <- merge(a,lookup,by=c('segmentNumber'))
     final$group  <- NULL
-    final$regionScoreThreshold <- (final$nSNPs_in_Region * 0.85) * 0.5
-    outputFinal <- final |>
-        dplyr::mutate(spatialLABEL = 
-                          case_when(state == 'errored' ~ 'Errored',
-                                    sequentialSumOriginalBF >
-                                        regionScoreThreshold  ~ 'LOH',
-                                    modePeak > 0.1 & 
-                                        sequentialSumOriginalBF > 9 &
-                                        (medianBF > 0 & medianBF < 0.5) ~ 'LOH',
-                                    sequentialSum < 9 & modePeak > 0.1 &
-                                                   medianBF > 0.5 ~ 'LOH',
-                                               medianBF < 0 ~ 'HET'))
+    outputFinal <- final
     outputFinal <- dplyr::arrange(outputFinal,CLUSTER,CHR,POS)
     return(outputFinal)
 }
@@ -499,15 +489,22 @@ hiddenMarkovAnalysis <- function(df, initProbs, trProbs){
     step3 <- runHMM_3(step2)
     step4 <- regionAnalysis(list1,step3)
     done <- regionFinalize(step4)
-    done <- done[c('rsID','CHR','POS','modePeak','medianBF','meanBF',
-                   'sequentialSum','REF','ALT','TOTAL','AF',
-                   'bayesFactors','spatialLABEL',
-                   'intervalStart','intervalEnd','lengthOfInterval',
-                   'nSNPs_in_Region','p(D|loh)','p(D|het)','p(het|D)',
-                   'p(loh|D)','orderNorm','state','S1','S2', 'segmentNumber',
-                   'CLUSTER')] |> 
+    done <- done[c('CLUSTER','rsID','CHR','POS','REF','ALT','TOTAL','AF',
+                   'bayesFactors','Log10BayesFactors','p(D|loh)','p(D|het)',
+                   'p(het|D)','p(loh|D)','orderNorm','state','S1','S2',
+                   'modePeak','medianBF','meanBF','sequentialSum',
+                   'intervalStart','intervalEnd',
+                   'lengthOfInterval','nSNPs_in_Region')] |> 
         dplyr::arrange(CLUSTER,CHR,POS) |> 
         dplyr::filter(lengthOfInterval > 1000)
+    names(done) <- c(
+        'cluster','rsID','chromosome','position','referenceCounts',
+        'alternativeCounts','totalCounts','alleleFraction','bayesFactors',
+        'log10BayesFactors','p(D|loh)','p(D|het)','p(het|D)','p(loh|D)',
+        'orderedNormalization','state','probabilityOfS1','probabilityOfS2',
+        'segment_modePeak','segment_medianBF','segment_meanBF',
+        'segment_sequentialSum','segment_intervalStart',
+        'segment_intervalEnd','segment_lengthOfInterval','segment_nSNPs')
     return(done)
 }
 

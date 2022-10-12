@@ -24,7 +24,7 @@ Michelle Webb
 }
 
 \examples{
-\donttest{data('humanGBMsampleAC')
+\dontrun{data('humanGBMsampleAC')
 data('initialStartProbabilities')
 df <- tLOHCalcUpdate(humanGBMsampleAC,1.25,1.25,500,500,4)
 dataframeList <- prepareHMMdataframes(df)

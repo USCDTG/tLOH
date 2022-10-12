@@ -1,5 +1,10 @@
 ## tLOH ChangeLog
 
+Changes in version 1.5.5
++ Minor updates to existing functions
++ Changed output column names for hiddenMarkovAnalysis function
++ Adjusted formatting throughout files
+
 Changes in version 1.5.4
 + Added new set of functions for an experimental workflow with documentation.
 + Updated functions.R, globals.R, data.R
