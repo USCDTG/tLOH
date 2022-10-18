@@ -17,7 +17,7 @@ library('dplyr')
 library('GenomicRanges')
 library('VariantAnnotation')
 ```
-v1.5.5
+v1.5.6
 
 tLOH: Assessment of evidence for loss of heterozygosity in spatial 
 transcriptomics pre-processed data using Bayes factor calculations.

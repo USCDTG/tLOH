@@ -1,4 +1,6 @@
 ## tLOH ChangeLog
+Changes in version 1.5.6
++ Minor fix to output column names - added one output column and renamed
 
 Changes in version 1.5.5
 + Minor updates to existing functions

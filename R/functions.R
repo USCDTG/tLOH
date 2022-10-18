@@ -493,7 +493,7 @@ hiddenMarkovAnalysis <- function(df, initProbs, trProbs){
                    'bayesFactors','Log10BayesFactors','p(D|loh)','p(D|het)',
                    'p(het|D)','p(loh|D)','orderNorm','state','S1','S2',
                    'modePeak','medianBF','meanBF','sequentialSum',
-                   'intervalStart','intervalEnd',
+                   'sequentialSumOriginalBF','intervalStart','intervalEnd',
                    'lengthOfInterval','nSNPs_in_Region')] |> 
         dplyr::arrange(CLUSTER,CHR,POS) |> 
         dplyr::filter(lengthOfInterval > 1000)
@@ -503,7 +503,8 @@ hiddenMarkovAnalysis <- function(df, initProbs, trProbs){
         'log10BayesFactors','p(D|loh)','p(D|het)','p(het|D)','p(loh|D)',
         'orderedNormalization','state','probabilityOfS1','probabilityOfS2',
         'segment_modePeak','segment_medianBF','segment_meanBF',
-        'segment_sequentialSum','segment_intervalStart',
+        'segment_sequentialSumAdjusted','segment_sequentialSum',
+        'segment_intervalStart',
         'segment_intervalEnd','segment_lengthOfInterval','segment_nSNPs')
     return(done)
 }
