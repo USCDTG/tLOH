@@ -81,36 +81,39 @@ tLOHDataImport <- function(vcf){
 }
 
 
-tLOHCalc <- function(forCalcDF){
+tLOHCalc <- function(forCalcDF,alpha1,beta1,alpha2,beta2,countThreshold){
     try({
-        forCalcDF <- forCalcDF[complete.cases(forCalcDF), ]
-        marginalM1 <- apply(forCalcDF[,c("REF","TOTAL")], 
-                            MARGIN = 1,
-                            FUN = marginalM1Calc, y = 0.5)
+        marginalM1_LOH <- apply(forCalcDF[,c("REF","TOTAL")],
+                                MARGIN = 1,
+                                FUN = purrr::possibly(marginalLikelihoodM1,NA), 
+                                a = alpha1, b = beta1)
+        
         marginalM2_HET <-  apply(forCalcDF[,c("REF","TOTAL")],
                                  MARGIN = 1,
-                                 FUN = marginalM2CalcBHET, a = 10, b = 10)
-        marginalM2_LOH <- apply(forCalcDF[,c("REF","TOTAL")],
-                                MARGIN = 1,
-                                FUN = marginalM2CalcBLOH, a = 10, b = 10)
+                                 FUN = purrr::possibly(marginalLikelihoodM2,NA), 
+                                 a = alpha2, b = beta2)
+        forCalcDF$`p(D|loh)` <- marginalM1_LOH
         forCalcDF$`p(D|het)` <- marginalM2_HET
-        forCalcDF$`p(D|loh)` <- marginalM2_LOH
         added <- forCalcDF$`p(D|het)` + forCalcDF$`p(D|loh)`
         forCalcDF$`p(het|D)` <- forCalcDF$`p(D|het)` / added
         forCalcDF$`p(loh|D)` <- forCalcDF$`p(D|loh)` / added
-        forCalcDF$bayesFactors <- forCalcDF$`p(D|het)` / forCalcDF$`p(D|loh)`
+        forCalcDF$bayesFactors <-  forCalcDF$`p(D|loh)` / forCalcDF$`p(D|het)`
         forCalcDF$inverseBayes <- 1 / forCalcDF$bayesFactors
         forCalcDF$LogBayesFactors <- log(forCalcDF$bayesFactors)
         forCalcDF$LogInverseBayes <- log(forCalcDF$inverseBayes)
         forCalcDF$Log10BayesFactors <- log10(forCalcDF$bayesFactors)
         forCalcDF$Log10InverseBayes <- log10(forCalcDF$inverseBayes)
-        forCalcDF$AF <- forCalcDF$ALT / forCalcDF$TOTAL},
-        silent=TRUE)
+        forCalcDF$AF <- forCalcDF$ALT / forCalcDF$TOTAL
+    })
     forCalcDF$CLUSTER <- as.numeric(forCalcDF$CLUSTER)
     forCalcDF$`CLUSTER_AF` <- forCalcDF$CLUSTER + forCalcDF$AF
+    forCalcDF <- forCalcDF[!(forCalcDF$CHR == 'chr6' 
+                             & forCalcDF$POS > 28510120 
+                             & forCalcDF$POS < 33500500),]
     forCalcDF <- forCalcDF[!(forCalcDF$CHR == 6 
                              & forCalcDF$POS > 28510120 
                              & forCalcDF$POS < 33500500),]
+    forCalcDF$CHR <- gsub("chr","",forCalcDF$CHR)
     forCalcDF$CHR_F <- factor(gsub("chr","",forCalcDF$CHR), 
                               levels=c('1','2','3','4','5','6','7',
                                        '8','9','10','11','12','13',
@@ -118,6 +121,12 @@ tLOHCalc <- function(forCalcDF){
                                        '19','20','21','22','23',
                                        '24','25'))
     forCalcDF <- forCalcDF[complete.cases(forCalcDF), ]
+    forCalcDF <- forCalcDF[which(forCalcDF$TOTAL >= countThreshold),]
+    forCalcDF$alpha <- alpha1
+    forCalcDF$beta <- beta1
+    forCalcDF$alpha2 <- alpha2
+    forCalcDF$beta2 <- beta2
+    forCalcDF <- dplyr::arrange(forCalcDF,CLUSTER,CHR,POS)
     return(forCalcDF)
 }
 
