@@ -53,10 +53,6 @@ This version is optimized for human data aligned to GRCh38. The HLA region on ch
 - stringr
 - stats
 
-## Contact
-Michelle Webb  
-michelgw@usc.edu
-
 ## Acknowledgments
 **10X Visium Spatial Gene Expression** https://www.10xgenomics.com/products/spatial-gene-expression              
 **R:** R Core Team (2019). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
