@@ -5,7 +5,7 @@ Date: 2021-05-5
 Title: Assessment of evidence for LOH in spatial transcriptomics pre-processed 
     data using Bayes factor calculations
 Authors@R: c(
-    person("Michelle", "Webb", email="michelgw@usc.edu",role=c("cre","aut")),
+    person("Michelle", "Webb", email="michelle.g.webb.1@gmail.com",role=c("cre","aut")),
     person("David","Craig",email="davidwcr@usc.edu", role=c("aut"))
     )
 Description: tLOH, or transcriptomicsLOH, assesses evidence for loss of 
